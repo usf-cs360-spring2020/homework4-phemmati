@@ -1,28 +1,38 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Node Link</title>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-  <script src="https://d3js.org/d3-path.v1.min.js"></script>
-  <script src="https://d3js.org/d3-shape.v1.min.js"></script>
-  
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Homework 4</title>
+
+  <!-- Load Bulma from CDN (consider saving it to repository instead) -->
+    <!-- https://bulma.io/ -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-    
- 
 
     <!-- Load Font Awesome 5 (free) icons -->
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-  </head>
-  
-   
-    <!-- Page header -->
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://d3js.org/d3-path.v1.min.js"></script>
+  <script src="https://d3js.org/d3-shape.v1.min.js"></script>
+  <!-- load the d3.js library -->
+  <script src="//d3js.org/d3.v5.min.js"></script>
+  <link href="style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+  <!-- Page header -->
   <!-- https://bulma.io/documentation/layout/hero/ -->
   <section class="hero is-info is-bold">
     <div class="hero-body">
       <div class="container">
         <!-- TODO: Change title -->
-        <h1 class="title">HomrWork 4</h1>
+        <h1 class="title">Homework 4</h1>
+        <!-- TODO: Change subtitle -->
         
       </div>
     </div>
@@ -56,24 +66,20 @@
             <span>Data</span>
           </a>
 
-          <!-- TODO: Modify or remove dropdown -->
-          <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
+          
+            <a class="navbar-link" href="#visualizations">
               Visualizations
             </a>
-
             <div class="navbar-dropdown">
               <a href="nodelink.html" class="navbar-item">
                 <span class="icon"><i class="fas fa-chart-line"></i></span>
-                <span>Dendogram</span>
+                <span>Node-Link Diagram</span>
               </a>
-              <a href="area_chart.html" class="navbar-item">
+              <a href="space.html" class="navbar-item">
                 <span class="icon"><i class="fas fa-chart-area"></i></span>
-                <span>Space Filling</span>
+                <span>Space-Filling Diagram</span>
               </a>
-              
-            </div>
-          </div>
+
         </div>
 
         <!-- Right navbar items -->
@@ -93,99 +99,300 @@
     </div>
   </nav>
   <!-- End page navigation -->
-  
-  
-</html>
-<style>
-text {
-  color: white;
-}
 
-text#tooltip {
-  font-family: sans-serif;
-  font-size: 12px;
-  text-shadow: 1px 1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, -1px -1px 0 #fff;
-  font-weight: 900;
-}
-
-text#toplabel {
-  font-family: sans-serif;
-  font-size: 12px;
-  text-shadow: 1px 1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, -1px -1px 0 #fff;
-  font-weight: 900;
-}
-
-.node circle {
-    fill: #fff;
-    stroke: steelblue;
-    stroke-width: 1.5px;
-}
-
-.node {
-    font: 10px sans-serif;
-}
-
-.link {
-    fill: none;
-    stroke: #ccc;
-    stroke-width: 1.5px;
-}
-
-.tooltip {
-  position: absolute;
-  width: auto;
-  height: auto;
-  padding: 8px;
-  background: #ddd;
-  pointer-events: none;
-  border: 1px solid #eee;
-  border-radius: 10px;
-  font-family: sans-serif;
-  font-size: 10pt;
-  color: black;
-}
-</style>
-
-<body>
-<section class="section">
+  <section class="section">
     <div class="container content">
-      <h1>Circular dendogram</h1><br>
+      <h1>Circular Dendogram with Straight Lines</h1><br>
       
-      <h6>D3 Implementation:</h6>
-      
-    <svg id="nodelink"></svg>
-
-      <p class="is-size-7 has-text-grey">
-        The plot shows trends related to number of passengers using diffrent airlines starting from 2005 towards the end of 2019. The visualization has been encoded using different colors showing operating airline's names. The vertical axe shows number of passengers and horizontal line indicates the year when flights have been operated. It includes both domestic and International flights.
-      </p>
-
-      <p class="is-size-7 has-text-grey">
-        The original dataset has been used for this visualization with filter on airline names column. In conclusion, United Airline's number of passengers has drastically increased over the period of 2012-2018. 
-
-      </p>
+      <svg id="nodelink"></svg>
 
       
-    </div>
-  </section>
-  
-  </body>
+
+      <h4 id="interactivity">Interactivity</h4>
+      <p>Using tooltip, you can see the name of the case and the amount of cases related to that. Mouse over to green circles to see the type of any case.</p>
+      
+      <h4 id="encoding">Encoding</h4>
+       <p>First level(root) is showing the city which is San Francisco.(Yellow)</br>
+       Second level shows the <b>call type groups</b>.(green)</br>
+       Third level shows the <b>call type </b>and how many of these cases happened per call type group in the city.(Dark Blue)</br>
+       Fourh level or the leaves show <b>final disposition</b>.(Purple)</br>
+       </p>     
+       <h4 id="wrangling">Wrangling</h4>
+       <p> Data has been filtered using DataSF website to show only cases related to March 2020, city of San Francisco.
+        </p>
+       <h4 id="conclusion">Conclusion</h4>
+       <p>
+        In Conclusion, plot gives us the overall overview of the process from receiving the call up to the disposition of the call.</br></p>
+
+
+          </div>
+          <!-- End page content -->
+        </div>
+        <!--</section>-->
+</body>
 
 <script>
+  d3.csv("data.csv").then(function(data_csv){
+  console.log(data_csv);
 
-var width = 960,
-    height = 500,
-    pad = 140,
-    diameter = 700;
+  var width = 960,
+      height = 500,
+      pad = 100,
+      diameter = 600;
+
+  // setup svg width and height
+  var svg = d3.select("body").select("#nodelink")
+    .style("width", width)
+    .style("height", height);
 
   
+  var plot = svg.append("g")
+    .attr("id", "plot")
+    .attr("transform", translate(pad + 200, pad + 120));
 
-d3.csv("data.csv").then(function(data){
+  var parent = d3.nest()
+    .key(function(d) {
+      return d["City"];
+    })
+    .key(function(d) {
+      return d["Call Type Group"]
+    })
+    .key(function(d) {
+      return d["Call Type"]
+    })
+    .key(function(d) {
+      return d["Call Final Disposition"]
+    })
+    .rollup(function(v) {
+      return v.length;
+    })
+    .entries(data_csv);
 
-  console.log(data);
+  root = parent[0].key;
 
+  var data = d3.hierarchy(parent[0], function(d) {
+    return d.values;
+  });
+
+  data.count()
+  data.sum(d => d.value);
+
+  data.sort(function(a, b) {
+    return b.height - a.height || b.count - a.count;
+  });
+
+  let layout = d3.cluster().size([2 * Math.PI, (diameter / 2) - pad]);
+
+  layout(data);
+
+  data.each(function(node) {
+    node.theta = node.x;
+    node.radial = node.y;
+
+    let point = toCartesian(node.radial, node.theta);
+    node.x = point.x;
+    node.y = point.y;
+  });
+
+  
+  let line = d3.line()
+    .curve(d3.curveLinear)
+    .x(d => d.x)
+    .y(d => d.y);
+  
+  let generator = function(node) {
+    return line([node.source, node.target]);
+  }
+  
+  
+ 
+  myColor = d3.scaleSequential([data.height, 0], d3.interpolateViridis)
+
+  drawLinks(plot.append("g"), data.links(), generator);
+  drawNodes(plot.append("g"), data.descendants(), true);
+
+
+  function toCartesian(r, theta) {
+    return {
+      x: r * Math.cos(theta),
+      y: r * Math.sin(theta)
+    };
+  }
+
+  function translate(x, y) {
+    return 'translate(' + String(x) + ',' + String(y) + ')';
+  }
+
+  function drawLinks(g, links, generator) {
+    let paths = g.selectAll('path')
+      .data(links)
+      .enter()
+      .append('path')
+      .attr('d', generator)
+      .attr('class', 'link');
+  }
+
+  function drawNodes(g, nodes, raise) {
+    
+    let circles = g.selectAll('circle')
+      .data(nodes, node => node.data.key)
+      .enter()
+      .append('circle')
+      .attr('r', 4)
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y)
+      .attr('id', d => d.data.key)
+      .text(function(d) {
+        return d.data.key;
+      })
+      .attr('class', 'node')
+      .style('fill', d => myColor(d.depth))
+      .style('stroke', 'black')
+
+    //remove empty circles
+    let empty = circles.filter(d => (d.data.key === "")).remove()
+
+
+    setupEvents(g, circles, raise);
+  }
+
+  function setupEvents(g, selection, raise) {
+
+    function showTooltip(g, node) {
+      let gbox = g.node().getBBox(); // get bounding box of group BEFORE adding text
+      let nbox = node.node().getBBox(); // get bounding box of node
+
+      // calculate shift amount
+      let dx = nbox.width / 2;
+      let dy = nbox.height / 2;
+
+      // retrieve node attributes (calculate middle point)
+      let x = nbox.x + dx;
+      let y = nbox.y + dy;
+
+      // get data for node
+      let datum = node.datum();
+
+      // remove "java.base." from the node name
+      let name = datum.data.key;
+
+      // use node name and total size as tooltip text
+      numberFormat = d3.format(".2~s");
+      let text = `${name} (${numberFormat(datum.value)} cases)`;
+
+      // create tooltip
+      let tooltip = g.append('text')
+        .text(text)
+        .attr('x', x)
+        .attr('y', y)
+        .attr('dy', -dy - 14) // shift upward above circle
+        .attr('text-anchor', 'middle') // anchor in the middle
+        .attr('id', 'tooltip');
+
+      // get bounding box for the text
+      let tbox = tooltip.node().getBBox();
+
+      // if text will fall off left side, anchor at start
+      if (tbox.x < gbox.x) {
+        tooltip.attr('text-anchor', 'start');
+        tooltip.attr('dx', -dx); // nudge text over from center
+      }
+      // if text will fall off right side, anchor at end
+      else if ((tbox.x + tbox.width) > (gbox.x + gbox.width)) {
+        tooltip.attr('text-anchor', 'end');
+        tooltip.attr('dx', dx);
+      }
+
+      // if text will fall off top side, place below circle instead
+      if (tbox.y < gbox.y) {
+        tooltip.attr('dy', dy + tbox.height);
+      }
+    }
+
+
+    // show tooltip text on mouseover (hover)
+    selection.on('mouseover.tooltip', function(d) {
+      console.log(d);
+      let selected = d3.select(this);
+      showTooltip(g, d3.select(this));
+
+      //create a filter for only last line of circles
+      if (d.height === 0 || d.height === 1) {
+        selection.filter(e => (d.data.key !== e.data.key))
+          .transition()
+          .duration(400)
+          .attr("fill-opacity", "0.2")
+          .style("stroke", "")
+      }
+    })
+
+    // remove tooltip text on mouseout
+    selection.on('mouseout.tooltip', function(d) {
+      selection
+        .transition()
+        .attr("fill-opacity", "1")
+        .style('stroke', 'black');
+      g.select("#tooltip").remove();
+    });
+  }
+
+  ///add legend
+  //add color circles
+  svg.append("circle")
+    .attr("cx", width - 350)
+    .attr("cy", height - 200)
+    .attr("r", 4)
+    .style("fill", "rgb(68, 1, 84)")
+    .style("stroke", "black")
+  svg.append("circle")
+    .attr("cx", width - 350)
+    .attr("cy", height - 250)
+    .attr("r", 4)
+    .style("fill", "rgb(49, 104, 142)")
+    .style("stroke", "black")
+  svg.append("circle")
+    .attr("cx", width - 350)
+    .attr("cy", height - 300)
+    .attr("r", 4)
+    .style("fill", "rgb(53, 183, 121)")
+    .style("stroke", "black")
+  svg.append("circle")
+    .attr("cx", width - 350)
+    .attr("cy", height - 350)
+    .attr("r", 4)
+    .style("fill", "rgb(253, 231, 37)")
+    .style("stroke", "black")
+
+  //add text
+  svg.append("text")
+    .attr("class", "legend-text")
+    .attr("x", width - 330)
+    .attr("y", height - 200)
+    .text("Call Final Disposition")
+    .attr("alignment-baseline", "middle")
+  svg
+    .append("text")
+    .attr("class", "legend-text")
+    .attr("x", width - 330)
+    .attr("y", height - 250)
+    .text("Call Type")
+    .attr("alignment-baseline", "middle")
+  svg
+    .append("text")
+    .attr("class", "legend-text")
+    .attr("x", width - 330)
+    .attr("y", height - 300)
+    .text("Call Type Group")
+    .attr("alignment-baseline", "middle")
+  svg
+    .append("text")
+    .attr("class", "legend-text")
+    .attr("x", width - 330)
+    .attr("y", height - 350)
+    .text("City")
+    .attr("alignment-baseline", "middle")
 })
-
-</script>
+  </script>
 
 <!-- Page footer -->
   <!-- https://bulma.io/documentation/layout/footer/ -->
@@ -236,3 +443,6 @@ d3.csv("data.csv").then(function(data){
   </script>
   <!-- End mobile menu responsiveness -->
 
+
+
+</html>
