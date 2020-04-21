@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Homework 4</title>
+
+  <!-- Load Bulma from CDN (consider saving it to repository instead) -->
+    <!-- https://bulma.io/ -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+
+    <!-- Load Font Awesome 5 (free) icons -->
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://d3js.org/d3-path.v1.min.js"></script>
+  <script src="https://d3js.org/d3-shape.v1.min.js"></script>
+  <!-- load the d3.js library -->
+  <script src="//d3js.org/d3.v5.min.js"></script>
+  <link href="style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+  <!-- Page header -->
+  <!-- https://bulma.io/documentation/layout/hero/ -->
+  <section class="hero is-info is-bold">
+    <div class="hero-body">
+      <div class="container">
+        <!-- TODO: Change title -->
+        <h1 class="title">Homework 4</h1>
+        <!-- TODO: Change subtitle -->
+        
+      </div>
+    </div>
+  </section>
+  <!-- End page header -->
+
+  <!-- Page navigation -->
+  <!-- https://bulma.io/documentation/components/navbar/ -->
+  <nav class="navbar is-light" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <!-- TODO: Change link to repository homepage if needed -->
+        <!-- TODO: Change which navbar-item is-active if needed -->
+        <a class="navbar-item is-active" href="index.html">
+          <span class="icon"><i class="fas fa-home"></i></span>
+          <span>Home</span>
+        </a>
+
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="main-menu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="main-menu" class="navbar-menu has-text-weight-medium">
+        <!-- Left navbar items -->
+        <div class="navbar-start">
+          <a class="navbar-item" href="#data" title="Data">
+            <span class="icon"><i class="fas fa-table"></i></span>
+            <span>Data</span>
+          </a>
+
+          
+            <a class="navbar-link" href="#visualizations">
+              Visualizations
+            </a>
+            <div class="navbar-dropdown">
+              <a href="nodelink.html" class="navbar-item">
+                <span class="icon"><i class="fas fa-chart-line"></i></span>
+                <span>Node-Link Diagram</span>
+              </a>
+              <a href="space.html" class="navbar-item">
+                <span class="icon"><i class="fas fa-chart-area"></i></span>
+                <span>Space-Filling Diagram</span>
+              </a>
+
+        </div>
+
+        <!-- Right navbar items -->
+        <div class="navbar-end">
+          <!-- TODO: Update as needed -->
+          <a class="navbar-item" href="grade.html" title="About">
+            <span class="icon"><i class="fas fa-tasks"></i></span>
+            <span>Grade</span>
+          </a>
+
+          <a class="navbar-item" href="about.html" title="About">
+            <span class="icon"><i class="fas fa-info-circle"></i></span>
+            <span>About</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- End page navigation -->
+
+  <section class="section">
+    <div class="container content">
+      <h1>Space Filling Diagram</h1><br>
+      
+      <svg id="spacefilling"></svg>
+
+      
+
+      <h3 id="interactivity">Interactivity</h3>
+      <p>Using tooltip, you can see the name of the case and the amount of cases related to that. Mouse over to green circles to see the type of any case.</p>
+      
+      <h3 id="encoding">Encoding</h3>
+       <p>Biggest lap(root in yellow) is showing the city which is San Francisco.</br>
+       Green laps show the <b>call type groups</b>.</br>
+       Dark Blue laps show the <b>call type </b>and how many of these cases happened per call type group in the city.</br>
+       Purple laps or the smallests show <b>final disposition</b>.(Purple)</br>
+       </p>     
+       <h3 id="wrangling">Wrangling</h3>
+       <p> Data has been filtered using DataSF website to show only cases related to March 2020, city of San Francisco.
+        </p>
+       <h3 id="conclusion">Conclusion</h3>
+       <p>
+        In Conclusion, plot gives us the overall overview of the calls in respect to neighborhoods. We can understand that 2 neighborhoods (Tenderloin and South Market) with 2k and 1.6k cases had the most cases.
+.</br></p>
+
+
+          </div>
+          <!-- End page content -->
+        </div>
+        <!--</section>-->
+</body>
+
+<script>
+  d3.csv("data.csv").then(function(data_csv){
+  console.log(data_csv);
+
+  var width = 960,
+      height = 500,
+      pad = 100,
+      diameter = 600,
+      r = 20;
+
+  // setup svg width and height
+  var svg = d3.select("body").select("#spacefilling")
+    .style("width", width)
+    .style("height", height);
+
+  
+  var plot = svg.append("g")
+    .attr("id", "plot")
+    .attr("transform", translate(pad + 50, pad -50));
+
+  let parent = d3.nest()
+    .key(function(d) {
+      return d["City"];
+    })
+    .key(function(d) {
+      return d["Neighborhooods"]
+    })
+    .key(function(d) {
+      return d["Call Type Group"]
+    })
+    .key(function(d) {
+      return d["Call Type"]
+    })
+    .rollup(function(v) {
+      return v.length;
+    })
+    .entries(data_csv);
+    
+  root = parent[0].key;
+
+  var data = d3.hierarchy(parent[0], function(d) {
+    return d.values;
+  });
+
+  data.count()
+  data.sum(d => d.value);
+
+  data.sort(function(a, b) {
+    return b.height - a.height || b.count - a.count;
+  });
+
+  let layout = d3.pack()
+    .padding(r)
+    .size([diameter - 2 * pad, diameter - 2 * pad]);
+
+  layout(data);
+    
+  myColor = d3.scaleSequential([data.height, 0], d3.interpolateViridis)
+    
+  drawNodes(plot.append("g"), data.descendants(), false);
+    
+  function translate(x, y) {
+    return 'translate(' + String(x) + ',' + String(y) + ')';
+  }
+
+
+  function drawNodes(g, nodes, raise) {
+
+    let circles = g.selectAll('circle')
+      .data(nodes, node => node.data.key)
+      .enter()
+      .append('circle')
+      .attr('r', d => d.r ? d.r : r)
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y)
+      .attr('id', d => d.data.key)
+      .attr('class', 'node')
+      .style('fill', d => myColor(d.depth))
+      .style('stroke', 'black')
+      .on("click", function(d) {
+        if (focus !== d) zoom(d), d3.event.stopPropagation();
+      });
+
+    let empty = circles.filter(d => (d.data.key === ""))
+      .style("stroke", "")
+      .attr("fill-opacity", "0")
+
+    setupEvents(g, circles, raise);
+  }
+
+  function zoom(d) {
+    //console.log(d);
+    if (d.height == 2) {
+      let circles = d3.selectAll('circle').remove();
+      d3.select("#tooltip").remove();
+      d3.selectAll("text.legend-text").remove();
+      createSpaceFillingDown(data_csv, d.data.key);
+    }
+
+    if (d.height == 1) {
+      let circles = d3.selectAll('circle').remove();
+      d3.select("#tooltip").remove();
+      d3.selectAll("text.legend-text").remove();
+      createSpaceFillingDown(data_csv, d.parent.data.key);
+    }
+
+  }
+
+  function setupEvents(g, selection, raise) {
+
+    function showTooltip(g, node) {
+      let gbox = g.node().getBBox(); // get bounding box of group BEFORE adding text
+      let nbox = node.node().getBBox(); // get bounding box of node
+
+      // calculate shift amount
+      let dx = nbox.width / 2;
+      let dy = nbox.height / 2;
+
+      // retrieve node attributes (calculate middle point)
+      let x = nbox.x + dx;
+      let y = nbox.y + dy;
+
+      // get data for node
+      let datum = node.datum();
+
+      // remove "java.base." from the node name
+      let name = datum.data.key;
+
+      // use node name and total size as tooltip text
+      numberFormat = d3.format(".2~s");
+      let text = `${name} (${numberFormat(datum.value)} cases)`;
+
+      // create tooltip
+      let tooltip = g.append('text')
+        .text(text)
+        .attr('x', x)
+        .attr('y', y)
+        .attr('dy', -dy - 4) // shift upward above circle
+        .attr('text-anchor', 'middle') // anchor in the middle
+        .attr('id', 'tooltip');
+    
+     // get bounding box for the text
+      let tbox = tooltip.node().getBBox();
+
+      // if text will fall off left side, anchor at start
+      if (tbox.x < gbox.x) {
+        tooltip.attr('text-anchor', 'start');
+        tooltip.attr('dx', -dx); // nudge text over from center
+      }
+      // if text will fall off right side, anchor at end
+      else if ((tbox.x + tbox.width) > (gbox.x + gbox.width)) {
+        tooltip.attr('text-anchor', 'end');
+        tooltip.attr('dx', dx);
+      }
+
+      // if text will fall off top side, place below circle instead
+      if (tbox.y < gbox.y) {
+        tooltip.attr('dy', dy + tbox.height);
+      }
+    }
+
+
+    // show tooltip text on mouseover (hover)
+    selection.on('mouseover.tooltip', function(d) {
+      let selected = d3.select(this);
+      showTooltip(g, d3.select(this));
+
+    })
+
+    // remove tooltip text on mouseout
+    selection.on('mouseout.tooltip', function(d) {
+      g.select("#tooltip").remove();
+    });
+
+    selection.on('click.tooltip', function(d) {
+      let selected = d3.select(this);
+      let arr = selected._groups;
+      let arr2 = arr[0];
+
+      console.log(arr2[0])
+      //showTooltip(g, d3.select(this));
+
+    });
+  }
+
+ 
+  
+  ///add legend
+  //add color circles
+  svg.append("circle")
+    .attr("cx", width - 350)
+    .attr("cy", height - 200)
+    .attr("r", 5)
+    .style("fill", "rgb(253, 231, 37)")
+    .style("stroke", "black")
+  svg.append("circle")
+    .attr("cx", width - 350)
+    .attr("cy", height - 250)
+    .attr("r", 5)
+    .style("fill", "rgb(53, 183, 121)")
+    .style("stroke", "black")
+  svg.append("circle")
+    .attr("cx", width - 350)
+    .attr("cy", height - 300)
+    .attr("r", 5)
+    .style("fill", "rgb(49, 104, 142)")
+    .style("stroke", "black")
+  svg.append("circle")
+    .attr("cx", width - 350)
+    .attr("cy", height - 350)
+    .attr("r", 5)
+    .style("fill", "rgb(68, 1, 84)")
+    .style("stroke", "black")
+
+
+
+  //add text
+  svg
+    .append("text")
+    .attr("class", "legend-text")
+    .attr("x", width - 330)
+    .attr("y", height - 200)
+    .text("City")
+    .attr("alignment-baseline", "middle")
+  svg.append("text")
+    .attr("class", "legend-text")
+    .attr("x", width - 330)
+    .attr("y", height - 250)
+    .text("Neighborhood")
+    .attr("alignment-baseline", "middle")
+  svg
+    .append("text")
+    .attr("class", "legend-text")
+    .attr("x", width - 330)
+    .attr("y", height - 300)
+    .text("Call Type Group")
+    .attr("alignment-baseline", "middle")
+  svg
+    .append("text")
+    .attr("class", "legend-text")
+    .attr("x", width - 330)
+    .attr("y", height - 350)
+    .text("Call Type")
+    .attr("alignment-baseline", "middle")
+
+})
+  </script>
+
+<!-- Page footer -->
+  <!-- https://bulma.io/documentation/layout/footer/ -->
+  <footer class="footer">
+    <div class="content has-text-centered is-size-7">
+      <p>
+        <a href="#top">
+          <span class="fas fa-arrow-up"></span>
+          <span class="has-text-weight-medium">Back to Top</span>
+        </a>
+      </p>
+
+      <p>
+        <!-- TODO: Change to link to your Github repository -->
+        <a href="https://github.com/usf-cs360-spring2020/template-bulma" class="button is-small" style="padding-left: 1em; padding-right: 1em;">
+          <i class="fab fa-github-alt"></i>&nbsp;<strong>Github</strong>
+        </a>
+
+        <a href="https://fontawesome.com/" class="button is-small" style="padding-left: 1em; padding-right: 1em;">
+          <i class="fab fa-font-awesome"></i>&nbsp;<strong>FontAwesome</strong>
+        </a>
+
+        <a href="https://bulma.io" class="button is-small">
+          <img src="https://bulma.io/images/made-with-bulma--semiblack.png" alt="Made with Bulma" width="128" height="24">
+        </a>
+      </p>
+    </div>
+  </footer>
+  <!-- End page footer -->
+
+  <!-- Mobile menu responsiveness -->
+  <!-- https://bulma.io/documentation/components/navbar/ -->
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+    if ($navbarBurgers.length > 0) {
+      $navbarBurgers.forEach( el => {
+        el.addEventListener('click', () => {
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
+          el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+        });
+      });
+    }
+  });
+  </script>
+  <!-- End mobile menu responsiveness -->
+
+
+
+</html>
