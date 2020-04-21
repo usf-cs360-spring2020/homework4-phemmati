@@ -1,29 +1,22 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8">
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Homework 4</title>
+    <!-- TODO: Change title -->
+    <title>HomeWork 4</title>
 
-  <!-- Load Bulma from CDN (consider saving it to repository instead) -->
+    <!-- Load Bulma from CDN (consider saving it to repository instead) -->
     <!-- https://bulma.io/ -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
 
     <!-- Load Font Awesome 5 (free) icons -->
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  </head>
 
-  <script src="https://d3js.org/d3.v5.min.js"></script>
-  <script src="https://d3js.org/d3-path.v1.min.js"></script>
-  <script src="https://d3js.org/d3-shape.v1.min.js"></script>
-  <!-- load the d3.js library -->
-  <script src="//d3js.org/d3.v5.min.js"></script>
-  <link href="style.css" rel="stylesheet" type="text/css">
-
-</head>
-
-<body>
+  <body>
 
   <!-- Page header -->
   <!-- https://bulma.io/documentation/layout/hero/ -->
@@ -31,9 +24,8 @@
     <div class="hero-body">
       <div class="container">
         <!-- TODO: Change title -->
-        <h1 class="title">Homework 4</h1>
+        <h1 class="title">San Francisco Call Service Center Visualization</h1>
         <!-- TODO: Change subtitle -->
-        
       </div>
     </div>
   </section>
@@ -61,15 +53,17 @@
       <div id="main-menu" class="navbar-menu has-text-weight-medium">
         <!-- Left navbar items -->
         <div class="navbar-start">
-          <a class="navbar-item" href="#data" title="Data">
+          <a class="navbar-item" href="https://data.sfgov.org/Transportation/Air-Traffic-Passenger-Statistics/rkru-6vcg/" title="Data">
             <span class="icon"><i class="fas fa-table"></i></span>
             <span>Data</span>
           </a>
 
-          
-            <a class="navbar-link" href="#visualizations">
+          <!-- TODO: Modify or remove dropdown -->
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
               Visualizations
             </a>
+
             <div class="navbar-dropdown">
               <a href="nodelink.html" class="navbar-item">
                 <span class="icon"><i class="fas fa-chart-line"></i></span>
@@ -77,9 +71,11 @@
               </a>
               <a href="space.html" class="navbar-item">
                 <span class="icon"><i class="fas fa-chart-area"></i></span>
-                <span>Space-Filling Diagram</span>
+                <span>Space Filling Diagram</span>
               </a>
-
+              
+            </div>
+          </div>
         </div>
 
         <!-- Right navbar items -->
@@ -114,52 +110,41 @@
         </p>
 
 
-        <p>The goal for this homework is to visualize the tree maintenance requests of the city of San Francisco during February 2020 using SF 311 dataset from “<a href="https://data.sfgov.org/City-Infrastructure/311-Cases/vw6y-z8j6">Data SF</a>”.</p>
+        <p>"On any given day, more than 87,000 flights are in the skies in the United States. Only one-third are commercial carriers, like American, United or Southwest. On an average day, air traffic controllers handle 28,537 commercial flights (major and regional airlines), 27,178 general aviation flights (private planes), 24,548 air taxi flights (planes for hire), 5,260 military flights and 2,148 air cargo flights (Federal Express, UPS, etc.). At any given moment, roughly 5,000 planes are in the skies above the United States. In one year, controllers handle an average of 64 million takeoffs and landings." - From the National Air Traffic Controllers Association</p>
 
-        <p>In visualization section the map of the city of San Francisco including all tree maintenance requests of the considered timeline has been visualized.</p>
+        <p>The goal for this website is to visualize and discuss a dataset related to San Francisco International Airport air traffic during 2005-2019.</p>
 
-        
         <h2 id="data">About Dataset</h2>
 
 
-          <p>
-          <b>Title:</b> SF 311 Cases <br />
-          <b>Source:</b> <a href="https://data.sfgov.org/City-Infrastructure/311-Cases/vw6y-z8j6">https://data.sfgov.org/City-Infrastructure/311-Cases/vw6y-z8j6</a><br />
-          <b>Publishing Department:</b> <a href="https://sfgov.org/">Data SF</a><br />
-          <b>Rows:</b> 4.14M <br />
-          <b>Columns:</b> 20 <br />
-          <b>Accessed:</b> <em>April 10, 2020</em><br />
-        </p>
 
+        <p>This dataset, consists of details about around 22000 flights, tracks commercial flights to/from San Francisco International Airport(SFO)airport. You can find the original dataset <a href="https://data.sfgov.org/Transportation/Air-Traffic-Passenger-Statistics/rkru-6vcg/">here</a>, The data has been last updated on December 30, 2019 and has been accessed on February 10,2020.</p>
 
-
-        <p>This dataset includes cases generally associated with a place or thing (for example parks, streets, or buildings) and created July 1, 2008 or later. Cases generally logged by a user regarding their own needs (for example, property or business tax questions, parking permit requests) are not included. See the Program Link and detailed attachment below for more information. </p>
-
-        
+        <p>Also you can find the license <a href="https://opendatacommons.org/licenses/pddl/1.0/">here</a>.</p>
 
 
         <blockquote>
           <p>
-            <a href="https://opendatacommons.org/licenses/pddl/1.0/"> Open Data Commons Public Domain Dedication and License</a>.
+            "This data is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: <a href="http://www.opendatacommons.org/licenses/pddl/1.0/">www.opendatacommons.org/licenses/pddl/1.0/</a>"
           </p>
-          
+          <cite><p> <a href="https://opendatacommons.org/licenses/pddl/1.0/">License</a>.</p></cite>
         </blockquote>
 
-        <p>Overall, original dataset has 20 columns, below you can find important columns that some of them were used on this website's visualizations and their detailed description:</p>
+        <p>Overall, original dataset has 12 columns, below you can find important columns that were used on this website's visualizations and their detailed description:</p>
 
         <ol>
 
-          <li><strong>CaseID:</strong> The unique ID of the service request created.</li>
+          <li><strong>Activity Period:</strong> Years of active operation of flights from 2005 to 2019 .</li>
 
-          <li><strong>Opened:</strong> The date and time when the service request was made</li>
+          <li><strong>Operating Airline:</strong> Name of operating airline</li>
 
-          <li><strong>Responsible Agency:</strong> The agency responsible for fulfilling or otherwise addressing the service request.</li>
+          <li><strong>Operating Airline IATA Code:</strong> IATA code related to the airline </li>
 
-          <li><strong>Category:</strong> The human readable name of the service request type.</li>
+          <li><strong>GEO Summary:</strong> Geographic summary of the data (International or Domestic) </li>
 
-          <li><strong>Neighborhood:</strong> San Francisco Neighborhood as defined in 'SF Find Neighborhoods'.  </li>
+          <li><strong>GEO Region:</strong> Regions with flight routes to/from SFO </li>
 
-          <li><strong>Police District:</strong> San Francisco Police District as defined in 'Current Police Districts'. </li>
+          <li><strong>Passenger Count:</strong> Number of passengers boarded on flight</li>
 
 
         </ol>
@@ -167,89 +152,47 @@
         
         <h3 id="wrangling">Wrangling</h3>
 
-        <p>Data has been filtered using DataSF website tools. Dataset is narrowed down to 427 rows using columns: Category, Opened and Status .</p>
-
-        
+        <p>Data has been processed using the source website itself. You can find details of filters in each visualization page.</p>
 
         <h2 id="visualizations">Visualizations</h2>
 
-      <h6>D3 Implementation:</h6>
-      
-      <h3>Tree Maintenance Requests, February 2020</h3>
-    
-    <!--
-  hard-code the svg and various g layers so that even if the streets are loaded
-  and drawn last, they will still show up behind the symbols
--->
+        <p>There are total of five visualizations(Three of them created using Tableau desktop and Two of them implemented using d3.js). You can find each visualization using navigation bar or simply use links below where you can see the instructions on how to interpret and use the visualizations.</p>
 
-<figure>
-  <svg width="960" height="600" id="vis">
-    <g id="basemap"></g>
+        <p class="buttons">
+          <a class="button is-large is-success" href="line.html">
+            <span class="icon is-medium">
+              <i class="fas fa-chart-line"></i>
+            </span>
+            <span>Line Chart</span>
+          </a>
 
-    <!-- turn off pointer events for certain groups -->
-    <g id="streets" pointer-events="none"></g>
-    <g id="outline" pointer-events="none"></g>
+          <a class="button is-large is-primary" href="area_chart.html">
+            <span class="icon is-medium">
+              <i class="fas fa-chart-area"></i>
+            </span>
+            <span>Area Chart</span>
+          </a>
 
-    <g id="trees"></g>
-    <g id="tooltip" pointer-events="none"></g>
-    <g id="details" pointer-events="none"></g>
-  </svg>
+          <a class="button is-large is-info" href="bar_chart.html">
+            <span class="icon is-medium">
+              <i class="fas fa-chart-bar"></i>
+            </span>
+            <span>Bar Chart</span>
+          </a>
+        </p>
 
-  <figcaption>
-    Source: <a href="https://data.sfgov.org/City-Infrastructure/311-Cases/vw6y-z8j6">SF 311 Cases</a> (<a href="https://data.sfgov.org/Geographic-Locations-and-Boundaries/Analysis-Neighborhoods/p5b7-5n3h">Neighborhoods</a>, <a href="https://data.sfgov.org/Geographic-Locations-and-Boundaries/Streets-Active-and-Retired/3psu-pn9h">Streets</a>)
-  </figcaption>
-</figure>
-      
-      <br>
-      <br>
 
-      <p>
-        This map shows the number of tree maintenance requests during February 2020 for the city of San Francisco. Also some interactivities including brushing and a table with all necessary information of each request have been implemented.
-      </p>
+        <span class="heading">Acknowledgements</span>
 
-      
-    
-<h2 id="grade">Grade</h2>
+        <p>
+          <a href="#">Link to insiration</a><br/>
+          <a href="#">Link to StackOverflow snippet</a>
+        </p>
 
-        <!-- TODO: Remove custom style if no longer needed -->
-        <style>
-          table.grades tbody tr td:nth-child(1),
-          table.grades tbody tr td:nth-child(2) {
-            text-align: center;
-          }
-        </style>
+        <p class="is-6">
+          <em>Thanks to Person Name for their suggestion to do something with the visualization.</em>
+        </p>
 
-        <!-- TODO: Change or remove table -->
-        <!-- https://bulma.io/documentation/elements/table/ -->
-        <table class="table is-hoverable is-bordered grades">
-          <thead>
-            <tr>
-              <th>Letter</th>
-              <th>Done?</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-
-          <tbody>
-         
-                
-                <tr>
-                  <td>A</td>
-                  <td><i class="has-text-success fas fa-check-circle"></i></td>
-                  <td>
-                    <p>This grade requirements has been successfully completed as:</p>
-                    <ul>
-                      <li>Brushing interactivity plus detail-on-demand .</li>
-                      
-                    </ul>
-                  </td>
-                </tr>
-      
-          </tbody>
-
-        </table>
-
-  
 
         <h2 id="about">About Me</h2>
 
@@ -258,7 +201,7 @@
         <article class="media">
           <!-- TODO: Replace with profile photo -->
           <figure class="media-left">
-            <p class="image is-128x128" ><img class="is-rounded" src="parisa.jpg"></p>
+            <p class="image is-128x128" ><img class="is-rounded" src="profile.JPG"></p>
           </figure>
 
           <div class="media-content">
@@ -273,7 +216,7 @@
 
               <!-- TODO: Replace with brief biography -->
               <p>
-                I am a Computer Science graduate student with experience on Wireless protocol development. Beside programming enthusiast, I am a globetrotter who loves to travel to different part of the world. I have traveled to more than 30 countries up to now and still counting. Reading books and playing piano are my hobbies.
+                I am a Computer Science graduate student, I love coding and creating applications. My favorite courses are Java and data visualization. My hubbies are traveling, coding, and ofcourse playing piano.
               </p>
 
               <!-- TODO: Replace or remove tags -->
@@ -299,255 +242,6 @@
       <!-- End page content -->
     </div>
   </section>
-
-
-  
-  </body>
-
-
-
-
-<script src="https://d3js.org/d3.v5.min.js"></script>
-
-<script>
-const urls = {
-  basemap: "https://data.sfgov.org/resource/xfcw-9evu.geojson",
-  streets: "https://data.sfgov.org/resource/3psu-pn9h.geojson?$limit=20000",
-  trees: "https://data.sfgov.org/resource/vw6y-z8j6.json"
-};
-
-// calculate date range
-const end = d3.timeDay.ceil(d3.timeDay.offset(new Date(2020, 01, 29)));
-const start = d3.timeDay.floor(d3.timeDay.offset(new Date(2020, 01, 01)));
-const format = d3.timeFormat("%Y-%m-%dT%H:%M:%S");
-console.log(format(start), format(end));
-
-// add parameters to trees url
-urls.trees += "?$where=starts_with(service_name, 'Tree Maintenance')";
-urls.trees += " AND requested_datetime between '" + format(start) + "'";
-urls.trees += " and '" + format(end) + "'";
-urls.trees += " AND status_description = 'Open'";
-
-// output url before encoding
-console.log(urls.trees);
-
-// encode special characters
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI
-urls.trees = encodeURI(urls.trees);
-console.log(urls.trees);
-
-const svg = d3.select("body").select("svg#vis");
-
-const g = {
-  basemap: svg.select("g#basemap"),
-  streets: svg.select("g#streets"),
-  outline: svg.select("g#outline"),
-  trees: svg.select("g#trees"),
-  tooltip: svg.select("g#tooltip"),
-  details: svg.select("g#details")
-};
-
-// setup tooltip (shows neighborhood name)
-const tip = g.tooltip.append("text").attr("id", "tooltip");
-tip.attr("text-anchor", "end");
-tip.attr("dx", -5);
-tip.attr("dy", -5);
-tip.style("visibility", "hidden");
-
-// add details widget
-// https://bl.ocks.org/mbostock/1424037
-const details = g.details.append("foreignObject")
-  .attr("id", "details")
-  .attr("width", 960)
-  .attr("height", 600)
-  .attr("x", 0)
-  .attr("y", 0);
-
-const body = details.append("xhtml:body")
-  .style("text-align", "left")
-  .style("background", "none")
-  .html("<p>N/A</p>");
-
-details.style("visibility", "hidden");
-
-// setup projection
-// https://github.com/d3/d3-geo#geoConicEqualArea
-const projection = d3.geoConicEqualArea();
-projection.parallels([37.692514, 37.840699]);
-projection.rotate([122, 0]);
-
-// setup path generator (note it is a GEO path, not a normal path)
-const path = d3.geoPath().projection(projection);
-
-d3.json(urls.basemap).then(function(json) {
-  // makes sure to adjust projection to fit all of our regions
-  projection.fitSize([960, 600], json);
-
-  // draw the land and neighborhood outlines
-  drawBasemap(json);
-
-  // now that projection has been set trigger loading the other files
-  // note that the actual order these files are loaded may differ
-  d3.json(urls.streets).then(drawStreets);
-  d3.json(urls.trees).then(drawTrees);
-});
-
-function drawBasemap(json) {
-  console.log("basemap", json);
-
-  const basemap = g.basemap.selectAll("path.land")
-    .data(json.features)
-    .enter()
-    .append("path")
-    .attr("d", path)
-    .attr("class", "land");
-
-  const outline = g.outline.selectAll("path.neighborhood")
-      .data(json.features)
-      .enter()
-      .append("path")
-      .attr("d", path)
-      .attr("class", "neighborhood")
-      .each(function(d) {
-        // save selection in data for interactivity
-        // saves search time finding the right outline later
-        d.properties.outline = this;
-      });
-
-  // add highlight
-  basemap.on("mouseover.highlight", function(d) {
-    d3.select(d.properties.outline).raise();
-    d3.select(d.properties.outline).classed("active", true);
-  })
-  .on("mouseout.highlight", function(d) {
-    d3.select(d.properties.outline).classed("active", false);
-  });
-
-  // add tooltip
-  basemap.on("mouseover.tooltip", function(d) {
-    tip.text(d.properties.nhood);
-    tip.style("visibility", "visible");
-  })
-  .on("mousemove.tooltip", function(d) {
-    const coords = d3.mouse(g.basemap.node());
-    tip.attr("x", coords[0]);
-    tip.attr("y", coords[1]);
-  })
-  .on("mouseout.tooltip", function(d) {
-    tip.style("visibility", "hidden");
-  });
-}
-
-function drawStreets(json) {
-  console.log("streets", json);
-
-  // only show active streets
-  const streets = json.features.filter(function(d) {
-    return d.properties.active;
-  });
-
-  console.log("removed", json.features.length - streets.length, "inactive streets");
-
-  g.streets.selectAll("path.street")
-    .data(streets)
-    .enter()
-    .append("path")
-    .attr("d", path)
-    .attr("class", "street");
-}
-
-function drawTrees(json) {
-  console.log("trees", json);
-
-  // loop through and add projected (x, y) coordinates
-  // (just makes our d3 code a bit more simple later)
-  json.forEach(function(d) {
-    const latitude = parseFloat(d.lat);
-    const longitude = parseFloat(d.long);
-    const pixels = projection([longitude, latitude]);
-
-    d.x = pixels[0];
-    d.y = pixels[1];
-  });
-
-  const symbols = g.trees.selectAll("circle")
-    .data(json)
-    .enter()
-    .append("circle")
-    .attr("cx", d => d.x)
-    .attr("cy", d => d.y)
-    .attr("r", 3)
-    .attr("class", "symbol");
-  
-  
-
-  symbols.on("mouseover", function(d) {
-    d3.selectAll('circle')
-          .style('opacity', 0.1);
-    d3.select(this).raise();
-    d3.select(this).classed("active", true);
-    d3.select(this)
-        .style('opacity', 1)
-        .style("stroke-width", 1)
-        .style("cursor", "pointer");
-  
-
-    // use template literal for the detail table
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
-    const html = `
-      <table border="1" cellspacing="0" cellpadding="2">
-      <tbody>
-        <tr>
-          <th>CaseID:</th>
-          <td>${d.service_request_id}</td>
-        </tr>
-        <tr>
-          <th>Opened:</th>
-          <td>${new Date(d.requested_datetime).toDateString()}</td>
-        </tr>
-        <tr>
-          <th>Responsible Agency:</th>
-          <td>${d.agency_responsible}</td>
-        </tr>
-        <tr>
-          <th>Neighborhood:</th>
-          <td>${d.neighborhoods_sffind_boundaries}</td>
-        </tr>
-        <tr>
-          <th>Category:</th>
-          <td>${d.service_name}</td>
-        </tr>
-        <tr>
-          <th>Police District:</th>
-          <td>${d.police_district}</td>
-        </tr>
-      </tbody>
-      </table>
-    `;
-
-    body.html(html);
-    details.style("visibility", "visible")
-    .style("width", "300px");
-  });
-
-  symbols.on("mouseout", function(d) {
-    d3.selectAll("circle")
-          .style('opacity', 1);
-    d3.select(this).classed("active", false);
-    d3.select(this)
-        .style("stroke-width", 1)
-        .style("cursor", "none");
-    details.style("visibility", "hidden");
-  });
-  
- 
-}
-
-function translate(x, y) {
-  return "translate(" + String(x) + "," + String(y) + ")";
-}
-</script>
-
 
   <!-- Page footer -->
   <!-- https://bulma.io/documentation/layout/footer/ -->
@@ -597,4 +291,6 @@ function translate(x, y) {
   });
   </script>
   <!-- End mobile menu responsiveness -->
-</body>
+  </body>
+
+</html>

@@ -25,15 +25,14 @@
 
 <body>
 
-  <!-- Page header -->
+   <!-- Page header -->
   <!-- https://bulma.io/documentation/layout/hero/ -->
   <section class="hero is-info is-bold">
     <div class="hero-body">
       <div class="container">
         <!-- TODO: Change title -->
-        <h1 class="title">Homework 4</h1>
+        <h1 class="title">San Francisco Call Service Center Visualization</h1>
         <!-- TODO: Change subtitle -->
-        
       </div>
     </div>
   </section>
@@ -61,15 +60,17 @@
       <div id="main-menu" class="navbar-menu has-text-weight-medium">
         <!-- Left navbar items -->
         <div class="navbar-start">
-          <a class="navbar-item" href="#data" title="Data">
+          <a class="navbar-item" href="https://data.sfgov.org/Transportation/Air-Traffic-Passenger-Statistics/rkru-6vcg/" title="Data">
             <span class="icon"><i class="fas fa-table"></i></span>
             <span>Data</span>
           </a>
 
-          
-            <a class="navbar-link" href="#visualizations">
+          <!-- TODO: Modify or remove dropdown -->
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
               Visualizations
             </a>
+
             <div class="navbar-dropdown">
               <a href="nodelink.html" class="navbar-item">
                 <span class="icon"><i class="fas fa-chart-line"></i></span>
@@ -77,9 +78,11 @@
               </a>
               <a href="space.html" class="navbar-item">
                 <span class="icon"><i class="fas fa-chart-area"></i></span>
-                <span>Space-Filling Diagram</span>
+                <span>Space Filling Diagram</span>
               </a>
-
+              
+            </div>
+          </div>
         </div>
 
         <!-- Right navbar items -->
