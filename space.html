@@ -228,14 +228,14 @@
       let circles = d3.selectAll('circle').remove();
       d3.select("#tooltip").remove();
       d3.selectAll("text.legend-text").remove();
-      createSpaceFillingDown(data_csv, d.data.key);
+      createZoom(data_csv, d.data.key);
     }
 
     if (d.height == 1) {
       let circles = d3.selectAll('circle').remove();
       d3.select("#tooltip").remove();
       d3.selectAll("text.legend-text").remove();
-      createSpaceFillingDown(data_csv, d.parent.data.key);
+      createZoom(data_csv, d.parent.data.key);
     }
 
   }

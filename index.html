@@ -53,7 +53,7 @@
       <div id="main-menu" class="navbar-menu has-text-weight-medium">
         <!-- Left navbar items -->
         <div class="navbar-start">
-          <a class="navbar-item" href="https://data.sfgov.org/Transportation/Air-Traffic-Passenger-Statistics/rkru-6vcg/" title="Data">
+          <a class="navbar-item" href="#data" title="Data">
             <span class="icon"><i class="fas fa-table"></i></span>
             <span>Data</span>
           </a>
@@ -110,43 +110,73 @@
         </p>
 
 
-        <p>"On any given day, more than 87,000 flights are in the skies in the United States. Only one-third are commercial carriers, like American, United or Southwest. On an average day, air traffic controllers handle 28,537 commercial flights (major and regional airlines), 27,178 general aviation flights (private planes), 24,548 air taxi flights (planes for hire), 5,260 military flights and 2,148 air cargo flights (Federal Express, UPS, etc.). At any given moment, roughly 5,000 planes are in the skies above the United States. In one year, controllers handle an average of 64 million takeoffs and landings." - From the National Air Traffic Controllers Association</p>
+         <p>The San Francisco Fire Department (SFFD) provides fire and emergency medical services to the City and County
+          of San Francisco, California. The San Francisco Fire Department, along with the San Francisco Police
+          Department and San Francisco Sheriff's Department, serves an estimated population of 1.4 million people, which
+          includes the approximately 850,000 citizens residing in the 47.5 square miles (123 km2) of San Francisco</p>
 
-        <p>The goal for this website is to visualize and discuss a dataset related to San Francisco International Airport air traffic during 2005-2019.</p>
+        <p>The goal for this website is to use a dataset about the San Francisco fire department to understand the quantity of 911 requests they manage and how these requests can be segregated into different categories. </p>
 
         <h2 id="data">About Dataset</h2>
 
 
 
-        <p>This dataset, consists of details about around 22000 flights, tracks commercial flights to/from San Francisco International Airport(SFO)airport. You can find the original dataset <a href="https://data.sfgov.org/Transportation/Air-Traffic-Passenger-Statistics/rkru-6vcg/">here</a>, The data has been last updated on December 30, 2019 and has been accessed on February 10,2020.</p>
+        <p>
+          <b>Title:</b> Fire Department Calls for Service <br />
+          <b>Source:</b> <a
+            href="https://data.sfgov.org/Public-Safety/Fire-Department-Calls-for-Service/nuek-vuh3">https://data.sfgov.org/Public-Safety/Fire-Department-Calls-for-Service/nuek-vuh3</a><br />
+          <b>Publishing Department:</b> Fire Department<br />
+          <b>Rows:</b> 5.21M <br />
+          <b>Columns:</b> 34 <br />
+          <b>Each row is a: </b> Response<br>
+          <b>License:</b> Public Domain Dedication and License v1.0 (<a
+            href="http://www.opendatacommons.org/licenses/pddl/1.0/" target="_blank">PDDL</a>)<br />
+          <b>Accessed:</b> <em>April 18, 2020</em><br />
+        </p>
 
-        <p>Also you can find the license <a href="https://opendatacommons.org/licenses/pddl/1.0/">here</a>.</p>
+        <p>
+          The dataset describes multiple observations for each 911 phone call that requires San Francisco Fire
+          Department assistance.
+          Each row contains information describing a particular <u>emergency response</u> to an unexpected or dangerous
+          occurrence.
+          Information included are: call type, time, location, neighborhood, response unit, etc.
+        </p>
 
 
-        <blockquote>
-          <p>
-            "This data is made available under the Public Domain Dedication and License v1.0 whose full text can be found at: <a href="http://www.opendatacommons.org/licenses/pddl/1.0/">www.opendatacommons.org/licenses/pddl/1.0/</a>"
-          </p>
-          <cite><p> <a href="https://opendatacommons.org/licenses/pddl/1.0/">License</a>.</p></cite>
-        </blockquote>
 
-        <p>Overall, original dataset has 12 columns, below you can find important columns that were used on this website's visualizations and their detailed description:</p>
+        <div class="content">
+          <blockquote>
+            <p>
+              <i>
+                Fire Calls-For-Service includes all fire units responses to calls. Each record includes the call number,
+                incident number, address, unit identifier, call type, and disposition. All relevant time intervals are
+                also included. Because this dataset is based on responses, and since most calls involved multiple units,
+                there are multiple records for each call number. Addresses are associated with a block number,
+                intersection or call box, not a specific address.
+              </i>
+            </p>
+            <p>
+              Source: <a
+                href="https://data.sfgov.org/Public-Safety/Fire-Department-Calls-for-Service/nuek-vuh3">https://data.sfgov.org/Public-Safety/Fire-Department-Calls-for-Service/nuek-vuh3</a>
+            </p>
+          </blockquote>
+        </div>
+
+         <p>Columns of interest:</p>
 
         <ol>
+          <li><strong>Call Type:</strong> Type of call the incident falls into.</li>
 
-          <li><strong>Activity Period:</strong> Years of active operation of flights from 2005 to 2019 .</li>
+          <li><strong>Call Final Disposition:</strong> Disposition of the call (Code). For example TH2: Transport to
+            Hospital - Code 2, FIR: Resolved by Fire Department.</li>
 
-          <li><strong>Operating Airline:</strong> Name of operating airline</li>
+          <li><strong>Unit Type:</strong> Unit type.</li>
 
-          <li><strong>Operating Airline IATA Code:</strong> IATA code related to the airline </li>
+          <li><strong>Call Type Group:</strong> Call types are divided into four main groups: Fire, Alarm, Potential Life Threatening and Non Life Threatening.</li>
 
-          <li><strong>GEO Summary:</strong> Geographic summary of the data (International or Domestic) </li>
-
-          <li><strong>GEO Region:</strong> Regions with flight routes to/from SFO </li>
-
-          <li><strong>Passenger Count:</strong> Number of passengers boarded on flight</li>
-
-
+          <li><strong> Neighborhood District:</strong> Neighborhood District associated with this address, boundaries
+            available here.</li>
+          
         </ol>
 
         
@@ -154,33 +184,7 @@
 
         <p>Data has been processed using the source website itself. You can find details of filters in each visualization page.</p>
 
-        <h2 id="visualizations">Visualizations</h2>
-
-        <p>There are total of five visualizations(Three of them created using Tableau desktop and Two of them implemented using d3.js). You can find each visualization using navigation bar or simply use links below where you can see the instructions on how to interpret and use the visualizations.</p>
-
-        <p class="buttons">
-          <a class="button is-large is-success" href="line.html">
-            <span class="icon is-medium">
-              <i class="fas fa-chart-line"></i>
-            </span>
-            <span>Line Chart</span>
-          </a>
-
-          <a class="button is-large is-primary" href="area_chart.html">
-            <span class="icon is-medium">
-              <i class="fas fa-chart-area"></i>
-            </span>
-            <span>Area Chart</span>
-          </a>
-
-          <a class="button is-large is-info" href="bar_chart.html">
-            <span class="icon is-medium">
-              <i class="fas fa-chart-bar"></i>
-            </span>
-            <span>Bar Chart</span>
-          </a>
-        </p>
-
+        
 
         <span class="heading">Acknowledgements</span>
 
@@ -194,49 +198,7 @@
         </p>
 
 
-        <h2 id="about">About Me</h2>
-
-        <!-- Profile box -->
-        <!-- https://bulma.io/documentation/layout/media-object/ -->
-        <article class="media">
-          <!-- TODO: Replace with profile photo -->
-          <figure class="media-left">
-            <p class="image is-128x128" ><img class="is-rounded" src="profile.JPG"></p>
-          </figure>
-
-          <div class="media-content">
-            <div class="content">
-              <!-- TODO: Replace with contact information -->
-              <p>
-                <strong>Parisa Hemmati</strong><br/>
-                CS Major, <a href="https://www.usfca.edu/">University of San Francisco</a><br/>
-                <em>Expected Graduation: May 2022</em><br/>
-                <i class="fas fa-envelope"></i> <a href="mailto:username@dons.usfca.edu">Phemmati@dons.usfca.edu</a>
-              </p>
-
-              <!-- TODO: Replace with brief biography -->
-              <p>
-                I am a Computer Science graduate student, I love coding and creating applications. My favorite courses are Java and data visualization. My hubbies are traveling, coding, and ofcourse playing piano.
-              </p>
-
-              <!-- TODO: Replace or remove tags -->
-              <!-- https://bulma.io/documentation/elements/tag/ -->
-              <div class="heading">Skills</div>
-
-              <div class="tags">
-                <span class="tag">Python</span>
-                <span class="tag">C</span>
-                <span class="tag">Java</span>
-                <span class="tag">JavaScript</span>
-                <span class="tag">HTML</span>
-                <span class="tag">CSS</span>
-                <span class="tag">Tableau</span>
-                <span class="tag">Node.js</span>
-              </div>
-            </div>
-          </div>
-        </article>
-        <!-- End profile box -->
+        
 
       </div>
       <!-- End page content -->
