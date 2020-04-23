@@ -176,9 +176,7 @@ function create(data_csv) {
       let arr = selected._groups;
       let arr2 = arr[0];
 
-      console.log(arr2[0])
-      //showTooltip(g, d3.select(this));
-
+     
     });
   }
 
