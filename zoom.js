@@ -93,7 +93,7 @@ function createZoom(data_csv, type) {
     let circles = d3.selectAll('circle').remove();
     d3.select("#tooltip").remove();
     d3.selectAll("text.legend-text").remove();
-    createZoom(data_csv);
+    
   }
 
   function setupEvents(g, selection, raise) {
