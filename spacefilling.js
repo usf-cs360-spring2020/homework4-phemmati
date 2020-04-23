@@ -1,25 +1,28 @@
-function createZoom(data_csv, type) {
+function create(data_csv) {
 
-  let width = 960;
-  let height = 500;
-  let pad = 100;
-  let diameter = 600;
-  let r = 20;
+
+  var width = 960,
+      height = 500,
+      pad = 100,
+      diameter = 600,
+      r = 20;
 
   // setup svg width and height
-  let svg = d3.select("body").select("svg#spacefilling")
-    //d3.select(DOM.svg(width, height))
+  var svg = d3.select("body").select("#spacefilling")
     .style("width", width)
     .style("height", height);
 
-  // shift (0, 0) a little bit to leave some padding
-  let plot = svg.append("g")
+  
+  var plot = svg.append("g")
     .attr("id", "plot")
-    .attr("transform", translate(pad + 50, pad - 50));
+    .attr("transform", translate(pad + 50, pad -50));
 
-  let old_nested_data = d3.nest()
+  let parent = d3.nest()
     .key(function(d) {
-      return d["Neighborhooods"];
+      return d["City"];
+    })
+    .key(function(d) {
+      return d["Neighborhooods"]
     })
     .key(function(d) {
       return d["Call Type Group"]
@@ -31,14 +34,10 @@ function createZoom(data_csv, type) {
       return v.length;
     })
     .entries(data_csv);
+    
+  root = parent[0].key;
 
-  let nested_data = old_nested_data.filter(function(d) {
-     return d.key == type;
-  });
-
-  root = nested_data[0].key;
-
-  let data = d3.hierarchy(nested_data[0], function(d) {
+  var data = d3.hierarchy(parent[0], function(d) {
     return d.values;
   });
 
@@ -54,12 +53,11 @@ function createZoom(data_csv, type) {
     .size([diameter - 2 * pad, diameter - 2 * pad]);
 
   layout(data);
-
+    
   myColor = d3.scaleSequential([data.height, 0], d3.interpolateViridis)
-
+    
   drawNodes(plot.append("g"), data.descendants(), false);
-
-
+    
   function translate(x, y) {
     return 'translate(' + String(x) + ',' + String(y) + ')';
   }
@@ -90,58 +88,71 @@ function createZoom(data_csv, type) {
   }
 
   function zoom(d) {
-    let circles = d3.selectAll('circle').remove();
-    d3.select("#tooltip").remove();
-    d3.selectAll("text.legend-text").remove();
-    create(data_csv);
+    //console.log(d);
+    if (d.height == 2) {
+      let circles = d3.selectAll('circle').remove();
+      d3.select("#tooltip").remove();
+      d3.selectAll("text.legend-text").remove();
+      createZoom(data_csv, d.data.key);
+    }
+
+    if (d.height == 1) {
+      let circles = d3.selectAll('circle').remove();
+      d3.select("#tooltip").remove();
+      d3.selectAll("text.legend-text").remove();
+      createZoom(data_csv, d.parent.data.key);
+    }
+
   }
 
   function setupEvents(g, selection, raise) {
 
     function showTooltip(g, node) {
-      let gbox = g.node().getBBox(); 
-      let nbox = node.node().getBBox(); 
-      
+      let gbox = g.node().getBBox(); // get bounding box of group BEFORE adding text
+      let nbox = node.node().getBBox(); // get bounding box of node
+
+      // calculate shift amount
       let dx = nbox.width / 2;
       let dy = nbox.height / 2;
 
-      
+      // retrieve node attributes (calculate middle point)
       let x = nbox.x + dx;
       let y = nbox.y + dy;
 
-      
+      // get data for node
       let datum = node.datum();
 
-      
+      // remove "java.base." from the node name
       let name = datum.data.key;
 
-      
+      // use node name and total size as tooltip text
       numberFormat = d3.format(".2~s");
       let text = `${name} (${numberFormat(datum.value)} cases)`;
 
-      //tooltip
+      // create tooltip
       let tooltip = g.append('text')
         .text(text)
         .attr('x', x)
         .attr('y', y)
-        .attr('dy', -dy - 4)
-        .attr('text-anchor', 'middle') 
+        .attr('dy', -dy - 4) // shift upward above circle
+        .attr('text-anchor', 'middle') // anchor in the middle
         .attr('id', 'tooltip');
-
-      
+    
+     // get bounding box for the text
       let tbox = tooltip.node().getBBox();
 
-      
+      // if text will fall off left side, anchor at start
       if (tbox.x < gbox.x) {
         tooltip.attr('text-anchor', 'start');
         tooltip.attr('dx', -dx); // nudge text over from center
       }
-
+      // if text will fall off right side, anchor at end
       else if ((tbox.x + tbox.width) > (gbox.x + gbox.width)) {
         tooltip.attr('text-anchor', 'end');
         tooltip.attr('dx', dx);
       }
 
+      // if text will fall off top side, place below circle instead
       if (tbox.y < gbox.y) {
         tooltip.attr('dy', dy + tbox.height);
       }
@@ -151,11 +162,8 @@ function createZoom(data_csv, type) {
     // show tooltip text on mouseover (hover)
     selection.on('mouseover.tooltip', function(d) {
       let selected = d3.select(this);
-      let arr = selected._groups;
-      let arr2 = arr[0];
-      if (arr2[0].id !== "") {
-        showTooltip(g, d3.select(this));
-      }
+      showTooltip(g, d3.select(this));
+
     })
 
     // remove tooltip text on mouseout
@@ -168,53 +176,71 @@ function createZoom(data_csv, type) {
       let arr = selected._groups;
       let arr2 = arr[0];
 
-      
+      console.log(arr2[0])
+      //showTooltip(g, d3.select(this));
 
     });
   }
 
-
-
+ 
+  
   ///add legend
   //add color circles
   svg.append("circle")
     .attr("cx", width - 350)
     .attr("cy", height - 200)
-    .attr("r", 4)
-    .style("fill", "rgb(68, 1, 84)")
+    .attr("r", 5)
+    .style("fill", "rgb(253, 231, 37)")
     .style("stroke", "black")
   svg.append("circle")
     .attr("cx", width - 350)
     .attr("cy", height - 250)
-    .attr("r", 4)
-    .style("fill", "rgb(33, 145, 140)")
+    .attr("r", 5)
+    .style("fill", "rgb(53, 183, 121)")
     .style("stroke", "black")
   svg.append("circle")
     .attr("cx", width - 350)
     .attr("cy", height - 300)
-    .attr("r", 4)
-    .style("fill", "rgb(253, 231, 37)")
+    .attr("r", 5)
+    .style("fill", "rgb(49, 104, 142)")
+    .style("stroke", "black")
+  svg.append("circle")
+    .attr("cx", width - 350)
+    .attr("cy", height - 350)
+    .attr("r", 5)
+    .style("fill", "rgb(68, 1, 84)")
     .style("stroke", "black")
 
+
+
   //add text
-  svg.append("text")
-    .attr("class", "legend-text")
-    .attr("x", width - 330)
-    .attr("y", height - 200)
-    .text("Call Type Group")
-    .attr("alignment-baseline", "middle")
   svg
     .append("text")
     .attr("class", "legend-text")
     .attr("x", width - 330)
+    .attr("y", height - 200)
+    .text("City")
+    .attr("alignment-baseline", "middle")
+  svg.append("text")
+    .attr("class", "legend-text")
+    .attr("x", width - 330)
     .attr("y", height - 250)
-    .text("Call Type")
+    .text("Neighborhood")
     .attr("alignment-baseline", "middle")
   svg
     .append("text")
     .attr("class", "legend-text")
     .attr("x", width - 330)
     .attr("y", height - 300)
-    .text("Neighborhood")
+    .text("Call Type Group")
     .attr("alignment-baseline", "middle")
+  svg
+    .append("text")
+    .attr("class", "legend-text")
+    .attr("x", width - 330)
+    .attr("y", height - 350)
+    .text("Call Type")
+    .attr("alignment-baseline", "middle")
+ 
+
 }
